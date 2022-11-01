@@ -1,7 +1,7 @@
 
-public class GameStates 
+public enum GameStates
 {
-        Idle,
-        Moving,
-        Final
+    Idle,
+    Moving,
+    Final
 }

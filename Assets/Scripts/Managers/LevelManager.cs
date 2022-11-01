@@ -13,7 +13,7 @@ public class LevelManager : MonoBehaviour
 
     #region Serialized Variables
 
-    [SerializeField] private int totalLevelCount, levelID;
+    [SerializeField] private int _totalLevelCount, _levelID;
     [SerializeField] private Transform levelHolder;
 
 
@@ -37,7 +37,7 @@ public class LevelManager : MonoBehaviour
     private void Awake()
     {
        _levelData = GetLevelData();
-        levelID = GetActiveLevel();
+        _levelID = GetActiveLevel();
 
         Init();
     }
@@ -70,7 +70,7 @@ public class LevelManager : MonoBehaviour
 
     private void SubscribeEvents()
     {
-        CoreGameSignals.Instance.onLevelInitialize += _levelLoaderCommand.Execute(levelID);
+        CoreGameSignals.Instance.onLevelInitialize += _levelLoaderCommand.Execute(_levelID);
         CoreGameSignals.Instance.onClearActiveLevel += _levelDestroyerCommand.Execute;
         CoreGameSignals.Instance.onNextLevel += OnInitializeLevel;
         CoreGameSignals.Instance.onRestartLevel += OnInitializeLevel;
@@ -78,20 +78,20 @@ public class LevelManager : MonoBehaviour
 
     private void UnSubscribeEvents()
     {
-        CoreGameSignals.Instance.onLevelInitialize -= _levelLoaderCommand.Execute(levelID);
+        CoreGameSignals.Instance.onLevelInitialize -= _levelLoaderCommand.Execute(_levelID);
         CoreGameSignals.Instance.onClearActiveLevel -= _levelDestroyerCommand.Execute;
         CoreGameSignals.Instance.onNextLevel -= OnInitializeLevel;
         CoreGameSignals.Instance.onRestartLevel -= OnInitializeLevel;
     }
 
-    private voide OnDisable()
+    private void OnDisable()
     {
         UnSubscribeEvents();
     }
 
     private void Start()
     {
-        __levelLoaderCommand Execute(levelID);
+        _levelLoaderCommand.Execute(_levelID);
     }
 
     private void OnNextLevel()
@@ -99,7 +99,7 @@ public class LevelManager : MonoBehaviour
         _levelID++;
         CoreGameSignals.Instance.OnClearActiveLevel?.Invoke();
         CoreGameSignals.Instance.onReset?.Invoke();
-        CoreGameSignals.Instance.onLevelInitialize?.Invoke(levelID);
+        CoreGameSignals.Instance.onLevelInitialize?.Invoke(_levelID);
     }
 
     private void OnRestartLevel()
@@ -107,7 +107,7 @@ public class LevelManager : MonoBehaviour
         
         CoreGameSignals.Instance.OnClearActiveLevel?.Invoke();
         CoreGameSignals.Instance.onReset?.Invoke();
-        CoreGameSignals.Instance.onLevelInitialize?.Invoke(levelID);
+        CoreGameSignals.Instance.onLevelInitialize?.Invoke(_levelID);
     }
 
 

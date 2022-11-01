@@ -24,11 +24,12 @@ public class CoreGameSignals : MonoBehaviour
 
     public UnityAction<GameStates> onChangeGameState = delegate { };
     public UnityAction <int> onLevelInitialize = delegate{ };
-    public UnityAction onClearActiveLevel onLevelInitialize = delegate{ };  
-    public UnityAction onLevelFailed onLevelInitialize = delegate{ };
-    public UnityAction onLevelSuccessful onLevelInitialize = delegate{ };
-    public UnityAction onNextLevel onLevelInitialize = delegate{ };
-    public UnityAction onRestartLevel onLevelInitialize = delegate{ };
-    public UnityAction onReset onLevelInitialize = delegate{ };
+    public UnityAction onClearActiveLevel  = delegate{ };  
+    public UnityAction onLevelFailed  = delegate{ };
+    public UnityAction onLevelSuccessful  = delegate{ };
+    public UnityAction onNextLevel  = delegate{ };
+    public UnityAction onRestartLevel  = delegate{ };
+    public UnityAction onReset = delegate{ };
 
 }
+ 
