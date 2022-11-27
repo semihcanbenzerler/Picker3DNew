@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-// using Sirenix.OdinInspector;
+using Sirenix.OdinInspector;
 
 public class UIPanelController : MonoBehaviour
 {
@@ -37,16 +37,16 @@ public class UIPanelController : MonoBehaviour
        UnSubscribeEvents();
     }
 
-    // [Button("OpenPanel")]
+     [Button("OpenPanel")]
     private void OnOpenPanel(UIPanelTypes type, int layerPos)
     {
         Instantiate(Resources.Load<GameObject>($"Screens/{type}Panel"), layers[layerPos]);
     }
     
-    // [Button("ClosePanel")]
+     [Button("ClosePanel")]
     private void OnClosePanel(int layerPos)
     {
-        if (layers[layerPos].transform.childCount > 0) return;
+        if (layers[layerPos].transform.childCount > 0) 
         Destroy(layers[layerPos].GetChild(0).gameObject);
     }
 
@@ -54,7 +54,7 @@ public class UIPanelController : MonoBehaviour
     {
         for (int i = 0; i < layers.Count; i++)
         {
-            if (layers[i].transform.childCount > 0) return;
+            if (layers[i].transform.childCount > 0) 
             Destroy(layers[i].GetChild(0).gameObject);
         }
     }
