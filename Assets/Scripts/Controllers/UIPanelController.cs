@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
+using System.Linq;
 
 public class UIPanelController : MonoBehaviour
 {
@@ -37,25 +38,25 @@ public class UIPanelController : MonoBehaviour
        UnSubscribeEvents();
     }
 
-     [Button("OpenPanel")]
+    // [Button("OnOpenPanel")]
     private void OnOpenPanel(UIPanelTypes type, int layerPos)
     {
         Instantiate(Resources.Load<GameObject>($"Screens/{type}Panel"), layers[layerPos]);
     }
     
-     [Button("ClosePanel")]
+    // [Button("OnClosePanel")]
     private void OnClosePanel(int layerPos)
     {
         if (layers[layerPos].transform.childCount > 0) 
         Destroy(layers[layerPos].GetChild(0).gameObject);
     }
 
+    [Button("OnCloseAllPanels")]
     private void OnCloseAllPanels()
     {
-        for (int i = 0; i < layers.Count; i++)
+        foreach (var t in layers.Where(t => t.childCount>0))
         {
-            if (layers[i].transform.childCount > 0) 
-            Destroy(layers[i].GetChild(0).gameObject);
+          Destroy(t.GetChild(0).gameObject);
         }
     }
 

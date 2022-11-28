@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using Enums;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -13,11 +12,12 @@ public class CoreGameSignals : MonoBehaviour
     {
         if(Instance != null && Instance != this)
         {
+            Debug.LogWarning(Instance.GetInstanceID().ToString());
             Destroy(gameObject);
             return;
         }
         Instance = this;
-       // Debug.LogWarning(Instance.GetInstanceID().ToString());
+        
     }
 
     #endregion
@@ -30,6 +30,8 @@ public class CoreGameSignals : MonoBehaviour
     public UnityAction onNextLevel  = delegate{ };
     public UnityAction onRestartLevel  = delegate{ };
     public UnityAction onReset = delegate{ };
+    public UnityAction onPlay = delegate{ };
+
 
 }
  
