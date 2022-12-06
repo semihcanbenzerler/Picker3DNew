@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Data.ValueObjects;
 
 [CreateAssetMenu(fileName = "CD_Level", menuName = "Picker3D/CD_Level", order = 1)]
 public class CD_Level  : ScriptableObject
