@@ -56,18 +56,18 @@ namespace Managers
 
         private void OnLevelInitialize(int levelValue)
         {
-            CoreUISignals.Instance.onOpenPanel?.Invoke(UIPanelTypes.Level, 0);
+            CoreUISignals.Instance.onOpenPanel?.Invoke(Enums.UIPanelTypes.Level, 0);
             UISignals.Instance.onSetNewLevelValue?.Invoke(levelValue);
         }
 
         private void OnLevelSuccesful()
         {
-            CoreUISignals.Instance.onOpenPanel?.Invoke(UIPanelTypes.Win, 2);
+            CoreUISignals.Instance.onOpenPanel?.Invoke(Enums.UIPanelTypes.Win, 2);
         }
 
         private void OnLevelFailed()
         {
-            CoreUISignals.Instance.onOpenPanel?.Invoke(UIPanelTypes.Fail, 2);
+            CoreUISignals.Instance.onOpenPanel?.Invoke(Enums.UIPanelTypes.Fail, 2);
         }
         public void NextLevel()
         {
@@ -85,12 +85,13 @@ namespace Managers
         {
             CoreGameSignals.Instance.onPlay?.Invoke();
             CoreUISignals.Instance.onClosePanel?.Invoke(1);
+            CameraSignals.Instance.onSetCameraTarget?.Invoke();
         }
 
         private void OnReset()
         {
             CoreUISignals.Instance.onCloseAllPanels?.Invoke();
-            CoreUISignals.Instance.onOpenPanel?.Invoke(UIPanelTypes.Start, 1);
+            CoreUISignals.Instance.onOpenPanel?.Invoke(Enums.UIPanelTypes.Start, 1);
         }
     }
 }

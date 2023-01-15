@@ -1,5 +1,6 @@
 using Enums;
 using Extensions;
+using System;
 using UnityEngine.Events;
 
 public class CoreGameSignals : MonoSingleton<CoreGameSignals>
@@ -13,8 +14,10 @@ public class CoreGameSignals : MonoSingleton<CoreGameSignals>
     public UnityAction onRestartLevel  = delegate{ };
     public UnityAction onReset = delegate{ };
     public UnityAction onPlay = delegate{ };
+    public Func<int> onGetLevelValue = delegate { return 0; };
 
-    public UnityAction onStageAreaSuccessful = delegate { };
+    public UnityAction<int> onStageAreaSuccessful = delegate { };
     public UnityAction onStageAreaEntered = delegate { };
+    public UnityAction onFinishAreaEntered = delegate { };
 }
  

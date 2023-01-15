@@ -39,7 +39,7 @@ public class UIPanelController : MonoBehaviour
     }
 
     // [Button("OnOpenPanel")]
-    private void OnOpenPanel(UIPanelTypes type, int layerPos)
+    private void OnOpenPanel(Enums.UIPanelTypes type, int layerPos)
     {
         Instantiate(Resources.Load<GameObject>($"Screens/{type}Panel"), layers[layerPos]);
     }

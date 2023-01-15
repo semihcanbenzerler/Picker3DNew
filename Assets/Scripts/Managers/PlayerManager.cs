@@ -1,4 +1,5 @@
 using Assets.Scripts.Signals;
+using Commands.Player;
 using Controllers.Player;
 using Data.UnityObjects;
 using Data.ValueObjects;
@@ -13,6 +14,14 @@ namespace Managers
     public class PlayerManager : MonoBehaviour
     {
         #region Self Variables
+
+        #region Public Variables
+
+        public byte StageValue = 0;
+
+        internal ForceBallsToPoolCommand ForceCommand;
+
+        #endregion
 
         #region Serialized Variables
 
@@ -33,10 +42,16 @@ namespace Managers
         private void Awake()
         {
             _data = GetPlayerData();
-            SendDataToControllers();
+            SendDataToControllers(); 
+            Init();
         }
 
-        private PlayerData GetPlayerData()
+        private void Init()
+        {
+            ForceCommand = new ForceBallsToPoolCommand(this, _data.MovementData);
+        }
+
+            private PlayerData GetPlayerData()
         {
             return Resources.Load<CD_Player>("Data/CD_Player").Data;
         }
@@ -115,13 +130,16 @@ namespace Managers
         {
             movementController.IsReadyToPlay(false);
         }
-        private void OnStageAreaSuccessful()
+        private void OnStageAreaSuccessful(int value)
         {
+            StageValue = (byte)++value;
             movementController.IsReadyToPlay(true);
+            meshController.PlayConfetiParticle();
         }
 
         private void OnReset()
         {
+            StageValue = 0;
             movementController.OnReset();
             meshController.OnReset();
             physicsController.OnReset();

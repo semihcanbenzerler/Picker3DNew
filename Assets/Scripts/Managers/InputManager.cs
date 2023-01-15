@@ -7,6 +7,7 @@ using Sirenix.OdinInspector;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using System;
 using Assets.Scripts.Signals;
 
 namespace Managers
@@ -25,9 +26,9 @@ namespace Managers
 
         #region Private Variables
 
-        [ShowInInspector] [Header("Data")] private InputData _data;
+        [ShowInInspector][Header("Data")] private InputData _data;
 
-        [Space] [ShowInInspector] private bool _isAvailableForTouch, _isFirstTimeTouchTaken, _isTouching;
+        [Space][ShowInInspector] private bool _isAvailableForTouch, _isFirstTimeTouchTaken, _isTouching;
 
         private float _currentVelocity; //ref Type
         private float3 _moveVector; //ref Type
@@ -60,6 +61,16 @@ namespace Managers
             InputSignals.Instance.onDisableInput += OnDisableInput;
             CoreGameSignals.Instance.onReset += OnReset;
             CoreGameSignals.Instance.onPlay += OnPlay;
+        }
+
+        private void OnEnableInput()
+        {
+            _isAvailableForTouch = true;
+        }
+
+        private void OnDisableInput()
+        {
+            _isAvailableForTouch = false;
         }
 
         private void UnSubscribeEvents()
@@ -109,7 +120,6 @@ namespace Managers
                     {
                         Vector2 mouseDeltaPos = (Vector2)Input.mousePosition - _mousePosition.Value;
 
-
                         if (mouseDeltaPos.x > _data.HorizontalInputSpeed)
                             _moveVector.x = _data.HorizontalInputSpeed / 10f * mouseDeltaPos.x;
                         else if (mouseDeltaPos.x < -_data.HorizontalInputSpeed)
@@ -134,16 +144,6 @@ namespace Managers
         private void OnPlay()
         {
             _isAvailableForTouch = true;
-        }
-
-        private void OnEnableInput()
-        {
-            _isAvailableForTouch = true;
-        }
-
-        private void OnDisableInput()
-        {
-            _isAvailableForTouch = false;
         }
 
         private bool IsPointerOverUIElement()
