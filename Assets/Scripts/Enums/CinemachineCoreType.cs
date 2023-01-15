@@ -5,6 +5,6 @@ namespace Enums
         Body,
         Aim,
         Finalize,
-        Noise
+        Noise,
     }
 }

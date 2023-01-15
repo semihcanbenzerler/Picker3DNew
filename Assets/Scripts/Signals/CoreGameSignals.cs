@@ -1,23 +1,26 @@
+using System;
 using Enums;
 using Extensions;
-using System;
 using UnityEngine.Events;
 
-public class CoreGameSignals : MonoSingleton<CoreGameSignals>
+namespace Signals
 {
-    public UnityAction<GameStates> onChangeGameState = delegate { };
-    public UnityAction <int> onLevelInitialize = delegate{ };
-    public UnityAction onClearActiveLevel  = delegate{ };  
-    public UnityAction onLevelFailed  = delegate{ };
-    public UnityAction onLevelSuccessful  = delegate{ };
-    public UnityAction onNextLevel  = delegate{ };
-    public UnityAction onRestartLevel  = delegate{ };
-    public UnityAction onReset = delegate{ };
-    public UnityAction onPlay = delegate{ };
-    public Func<int> onGetLevelValue = delegate { return 0; };
+    public class CoreGameSignals : MonoSingleton<CoreGameSignals>
+    {
+        public UnityAction<GameStates> onChangeGameState = delegate { };
+        public UnityAction<int> onLevelInitialize = delegate { };
+        public UnityAction onClearActiveLevel = delegate { };
+        public UnityAction onLevelSuccessful = delegate { };
+        public UnityAction onLevelFailed = delegate { };
+        public UnityAction onNextLevel = delegate { };
+        public UnityAction onRestartLevel = delegate { };
+        public UnityAction onPlay = delegate { };
+        public UnityAction onReset = delegate { };
+        public Func<int> onGetLevelValue = delegate { return 0; };
 
-    public UnityAction<int> onStageAreaSuccessful = delegate { };
-    public UnityAction onStageAreaEntered = delegate { };
-    public UnityAction onFinishAreaEntered = delegate { };
+        public UnityAction<int> onStageAreaSuccessful = delegate { };
+        public UnityAction onStageAreaEntered = delegate { };
+        public UnityAction onFinishAreaEntered = delegate { };
+        public UnityAction onMinigameEntered = delegate { };
+    }
 }
- 

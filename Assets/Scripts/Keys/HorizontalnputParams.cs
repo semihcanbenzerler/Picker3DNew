@@ -1,10 +1,9 @@
-namespace Keys
+﻿namespace Keys
 {
-    public struct HorizontalInputParams
+    public struct HorizontalnputParams
     {
         public float HorizontalInputValue;
         public float HorizontalInputClampNegativeSide;
         public float HorizontalInputClampPositiveSide;
     }
 }
-

@@ -1,8 +1,10 @@
 using Controllers.Pool;
 using DG.Tweening;
-using Assets.Scripts.Signals;
 using Managers;
+using Signals;
+using System.Collections;
 using UnityEngine;
+using TMPro;
 
 namespace Controllers.Player
 {
@@ -49,11 +51,30 @@ namespace Controllers.Player
                 return;
             }
 
-            //if (other.CompareTag("MiniGame"))
-            //{
-                //Write Mini Game Conditions
-            //}
+
+            if (other.CompareTag("MinigameArea"))
+            {
+                StartCoroutine(MinigameFinish());
+            }
         }
+
+        IEnumerator MinigameFinish()
+        {
+            float collected = (PlayerPrefs.GetInt("TotalCollectedCount", 0) / 10);
+
+            yield return new WaitForSecondsRealtime(collected);
+
+            InputSignals.Instance.onDisableInput?.Invoke();
+            CoreGameSignals.Instance.onFinishAreaEntered?.Invoke();
+
+            float location = GameObject.Find("PlayerManager").transform.position.z;
+            float score = Mathf.RoundToInt(location);
+
+            CoreGameSignals.Instance.onLevelSuccessful?.Invoke();
+
+            GameObject.Find("Text - Score").GetComponent<TextMeshProUGUI>().text = ("Score: " + score.ToString());
+        }
+
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.yellow;

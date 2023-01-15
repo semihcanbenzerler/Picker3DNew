@@ -5,27 +5,20 @@ namespace Commands.Level
 {
     public class OnLevelDestroyerCommand : ICommand
     {
-
-        private Transform _LevelHolder;
+        private readonly Transform _levelHolder;
 
         public OnLevelDestroyerCommand(Transform levelHolder)
         {
-            _LevelHolder = levelHolder;
-        }
-    
-
-
-    public void Execute(int value)
-        {
-           
+            _levelHolder = levelHolder;
         }
 
         public void Execute()
         {
-            Object.Destroy(obj: _LevelHolder.GetChild(0).gameObject);
+            Object.Destroy(_levelHolder.GetChild(0).gameObject);
         }
 
+        public void Execute(int value)
+        {
+        }
     }
-    
-   
 }

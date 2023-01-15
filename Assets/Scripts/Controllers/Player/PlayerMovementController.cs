@@ -30,7 +30,8 @@ namespace Controllers.Player
         #endregion
 
         #endregion
-        public void GetMovementData(MovementData movementData)
+
+        internal void GetMovementData(MovementData movementData)
         {
             _data = movementData;
         }
@@ -63,7 +64,7 @@ namespace Controllers.Player
             velocity = new float3(_xValue * _data.SidewaysSpeed, velocity.y,
                 _data.ForwardSpeed);
             rigidbody.velocity = velocity;
-
+         
             float3 position;
             position = new float3(
                 Mathf.Clamp(rigidbody.position.x, _clampValues.x,
@@ -88,17 +89,18 @@ namespace Controllers.Player
         {
             _isReadyToMove = condition;
         }
-
-        internal void UpdateInputParams(HorizontalInputParams inputParams)
+        internal void UpdateInputParams(HorizontalnputParams inputParams)
         {
             _xValue = inputParams.HorizontalInputValue;
             _clampValues = new float2(inputParams.HorizontalInputClampNegativeSide,
                 inputParams.HorizontalInputClampPositiveSide);
         }
 
-        public void OnReset()
+        internal void OnReset()
         {
-
+            StopPlayer();
+            _isReadyToMove = false;
+            _isReadyToPlay = false;
         }
     }
 }

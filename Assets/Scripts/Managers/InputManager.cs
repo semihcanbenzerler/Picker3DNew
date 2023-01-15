@@ -1,14 +1,12 @@
 using System.Collections.Generic;
 using Data.UnityObjects;
 using Data.ValueObjects;
-using Signals;
 using Keys;
+using Signals;
 using Sirenix.OdinInspector;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using System;
-using Assets.Scripts.Signals;
 
 namespace Managers
 {
@@ -26,9 +24,9 @@ namespace Managers
 
         #region Private Variables
 
-        [ShowInInspector][Header("Data")] private InputData _data;
+        [ShowInInspector] [Header("Data")] private InputData _data;
 
-        [Space][ShowInInspector] private bool _isAvailableForTouch, _isFirstTimeTouchTaken, _isTouching;
+        [Space] [ShowInInspector] private bool _isAvailableForTouch, _isFirstTimeTouchTaken, _isTouching;
 
         private float _currentVelocity; //ref Type
         private float3 _moveVector; //ref Type
@@ -63,16 +61,6 @@ namespace Managers
             CoreGameSignals.Instance.onPlay += OnPlay;
         }
 
-        private void OnEnableInput()
-        {
-            _isAvailableForTouch = true;
-        }
-
-        private void OnDisableInput()
-        {
-            _isAvailableForTouch = false;
-        }
-
         private void UnSubscribeEvents()
         {
             InputSignals.Instance.onEnableInput -= OnEnableInput;
@@ -97,16 +85,19 @@ namespace Managers
                 _isTouching = false;
 
                 InputSignals.Instance.onInputReleased?.Invoke();
+                //Debug.LogWarning("Executed ---> onInputReleased");
             }
 
             if (Input.GetMouseButtonDown(0) && !IsPointerOverUIElement())
             {
                 _isTouching = true;
                 InputSignals.Instance.onInputTaken?.Invoke();
+                //Debug.LogWarning("Executed ---> onInputTaken");
                 if (!_isFirstTimeTouchTaken)
                 {
                     _isFirstTimeTouchTaken = true;
                     InputSignals.Instance.onFirstTimeTouchTaken?.Invoke();
+                    //Debug.LogWarning("Executed ---> onFirstTimeTouchTaken");
                 }
 
                 _mousePosition = Input.mousePosition;
@@ -120,6 +111,7 @@ namespace Managers
                     {
                         Vector2 mouseDeltaPos = (Vector2)Input.mousePosition - _mousePosition.Value;
 
+
                         if (mouseDeltaPos.x > _data.HorizontalInputSpeed)
                             _moveVector.x = _data.HorizontalInputSpeed / 10f * mouseDeltaPos.x;
                         else if (mouseDeltaPos.x < -_data.HorizontalInputSpeed)
@@ -130,12 +122,13 @@ namespace Managers
 
                         _mousePosition = Input.mousePosition;
 
-                        InputSignals.Instance.onInputDragged?.Invoke(new HorizontalInputParams()
+                        InputSignals.Instance.onInputDragged?.Invoke(new HorizontalnputParams()
                         {
                             HorizontalInputValue = _moveVector.x,
                             HorizontalInputClampNegativeSide = _data.ClampValues.x,
                             HorizontalInputClampPositiveSide = _data.ClampValues.y
                         });
+                        //Debug.LogWarning($"Executed ---> onInputDragged{_moveVector.x}");
                     }
                 }
             }
@@ -144,6 +137,16 @@ namespace Managers
         private void OnPlay()
         {
             _isAvailableForTouch = true;
+        }
+
+        private void OnEnableInput()
+        {
+            _isAvailableForTouch = true;
+        }
+
+        private void OnDisableInput()
+        {
+            _isAvailableForTouch = false;
         }
 
         private bool IsPointerOverUIElement()

@@ -1,4 +1,3 @@
-using Assets.Scripts.Signals;
 using Commands.Player;
 using Controllers.Player;
 using Data.UnityObjects;
@@ -6,7 +5,6 @@ using Data.ValueObjects;
 using Keys;
 using Signals;
 using Sirenix.OdinInspector;
-using System;
 using UnityEngine;
 
 namespace Managers
@@ -42,7 +40,7 @@ namespace Managers
         private void Awake()
         {
             _data = GetPlayerData();
-            SendDataToControllers(); 
+            SendDataToControllers();
             Init();
         }
 
@@ -51,7 +49,7 @@ namespace Managers
             ForceCommand = new ForceBallsToPoolCommand(this, _data.MovementData);
         }
 
-            private PlayerData GetPlayerData()
+        private PlayerData GetPlayerData()
         {
             return Resources.Load<CD_Player>("Data/CD_Player").Data;
         }
@@ -76,6 +74,7 @@ namespace Managers
             CoreGameSignals.Instance.onLevelSuccessful += OnLevelSuccessful;
             CoreGameSignals.Instance.onLevelFailed += OnLevelFailed;
             CoreGameSignals.Instance.onStageAreaEntered += OnStageAreaEntered;
+            CoreGameSignals.Instance.onFinishAreaEntered += OnFinishAreaEntered;
             CoreGameSignals.Instance.onStageAreaSuccessful += OnStageAreaSuccessful;
             CoreGameSignals.Instance.onReset += OnReset;
         }
@@ -89,6 +88,7 @@ namespace Managers
             CoreGameSignals.Instance.onLevelSuccessful -= OnLevelSuccessful;
             CoreGameSignals.Instance.onLevelFailed -= OnLevelFailed;
             CoreGameSignals.Instance.onStageAreaEntered -= OnStageAreaEntered;
+            CoreGameSignals.Instance.onFinishAreaEntered -= OnFinishAreaEntered;
             CoreGameSignals.Instance.onStageAreaSuccessful -= OnStageAreaSuccessful;
             CoreGameSignals.Instance.onReset -= OnReset;
         }
@@ -107,7 +107,8 @@ namespace Managers
         {
             movementController.IsReadyToMove(true);
         }
-        private void OnInputDragged(HorizontalInputParams inputParams)
+
+        private void OnInputDragged(HorizontalnputParams inputParams)
         {
             movementController.UpdateInputParams(inputParams);
         }
@@ -121,6 +122,7 @@ namespace Managers
         {
             movementController.IsReadyToPlay(false);
         }
+
         private void OnLevelFailed()
         {
             movementController.IsReadyToPlay(false);
@@ -130,11 +132,19 @@ namespace Managers
         {
             movementController.IsReadyToPlay(false);
         }
+
         private void OnStageAreaSuccessful(int value)
         {
             StageValue = (byte)++value;
             movementController.IsReadyToPlay(true);
+            meshController.ScaleUpPlayer();
+            meshController.ShowUpText();
             meshController.PlayConfetiParticle();
+        }
+
+        private void OnFinishAreaEntered()
+        {
+            movementController.IsReadyToPlay(false);
         }
 
         private void OnReset()

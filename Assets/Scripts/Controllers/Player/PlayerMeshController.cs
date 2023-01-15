@@ -32,6 +32,7 @@ namespace Controllers.Player
         {
             _data = scaleData;
         }
+
         internal void ScaleUpPlayer()
         {
             renderer.gameObject.transform.DOScaleX(_data.ScaleCounter, 1).SetEase(Ease.Flash);
@@ -43,14 +44,15 @@ namespace Controllers.Player
             scaleText.rectTransform.DOAnchorPosY(.85f, .65f).SetRelative(true).SetEase(Ease.OutBounce).OnComplete(() =>
                 scaleText.rectTransform.DOAnchorPosY(-.85f, .65f).SetRelative(true));
         }
+
         internal void PlayConfetiParticle()
         {
             confettiParticle.Play();
+            //confettiParticle.SetActive(true);
+            //DOVirtual.DelayedCall(2, () => confettiParticle.SetActive(false));
         }
-
         internal void OnReset()
         {
-
         }
     }
 }

@@ -4,6 +4,6 @@ namespace Enums
     {
         OnPlay,
         OnNextLevel,
-        OnRestartLevel
+        OnRestartLevel,
     }
 }

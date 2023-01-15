@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb17d792256715f4589af0ecb3a8e212, type: 3}
+  m_Script: {fileID: 11500000, guid: fb114264631046febcb97a3674e26d9e, type: 3}
   m_Name: CD_Input
   m_EditorClassIdentifier: 
   Data:

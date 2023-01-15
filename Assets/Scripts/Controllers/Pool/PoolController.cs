@@ -34,12 +34,21 @@ namespace Controllers.Pool
         private void Awake()
         {
             _data = GetPoolData();
+            PlayerPrefs.SetInt("TotalCollectedCount", 0);
+        }
+
+        private void UpdateCollected(int stageValue)
+        {
+            if (stageValue == stageID)
+            {
+                PlayerPrefs.SetInt("TotalCollectedCount", PlayerPrefs.GetInt("TotalCollectedCount", 0) + _collectedCount);
+            }
         }
 
         private PoolData GetPoolData()
         {
             return Resources.Load<CD_Level>("Data/CD_Level")
-                .Levels[(int)CoreGameSignals.Instance.onGetLevelValue?.Invoke()]
+                .Levels[(int) CoreGameSignals.Instance.onGetLevelValue?.Invoke()]
                 .PoolList[stageID];
         }
 
@@ -52,6 +61,7 @@ namespace Controllers.Pool
         {
             CoreGameSignals.Instance.onStageAreaSuccessful += OnActivateTweens;
             CoreGameSignals.Instance.onStageAreaSuccessful += OnChangeThePoolColor;
+            CoreGameSignals.Instance.onStageAreaSuccessful += UpdateCollected;
         }
 
         private void OnActivateTweens(int stageValue)
@@ -73,6 +83,7 @@ namespace Controllers.Pool
         {
             CoreGameSignals.Instance.onStageAreaSuccessful -= OnActivateTweens;
             CoreGameSignals.Instance.onStageAreaSuccessful -= OnChangeThePoolColor;
+            CoreGameSignals.Instance.onStageAreaSuccessful -= UpdateCollected;
         }
 
         private void OnDisable()
