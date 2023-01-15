@@ -1,6 +1,6 @@
 using Enums;
 using UnityEngine;
-using Sirenix.OdinInspector;
+
 public class GameManager : MonoBehaviour
 {
     #region  Self Variables
@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
     {
         UnsubscribeEvents();    
     }
-    [Button("Change State")]         
+
     private void OnChangeGameState(GameStates state)
     {
         states = state;

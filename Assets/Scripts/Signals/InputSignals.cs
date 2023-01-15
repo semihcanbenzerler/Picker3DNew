@@ -1,26 +1,14 @@
 using UnityEngine;
 using UnityEngine.Events;
 using Keys;
+using Extensions;
 
-    namespace Assets.Scripts.Signals
+namespace Assets.Scripts.Signals
 {
-    public class InputSignals : MonoBehaviour
+    public class InputSignals : MonoSingleton<InputSignals>
     {
-        #region Singleton
-
-        public static InputSignals Instance;
-
-        private void Awake()
-        {
-            if (Instance != null && Instance != this)
-            {
-                Destroy(gameObject);
-                return;
-            }
-        }
-
-        #endregion
-
+        public UnityAction onEnableInput = delegate { };
+        public UnityAction onDisableInput = delegate { };
         public UnityAction onFirstTimeTouchTaken = delegate { };
         public UnityAction onInputReleased = delegate { };
         public UnityAction onInputTaken = delegate { };
